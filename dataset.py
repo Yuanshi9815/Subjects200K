@@ -10,12 +10,12 @@ import requests
 import random
 import io
 
-base_url = "https://databucket2465.s3.ap-southeast-1.amazonaws.com"
+BASE_URL = "https://databucket2465.s3.ap-southeast-1.amazonaws.com"
 
 
 def get_file(path):
     # return the file object
-    file_path = os.path.join(base_url, path)
+    file_path = os.path.join(BASE_URL, path)
     response = requests.get(file_path)
     if response.status_code == 200:
         io_file = io.BytesIO(response.content)
@@ -29,8 +29,10 @@ class Split1(Dataset):
         self,
         path: str,
         condition_max_size: int = 512,
+        enable_filter: bool = True,
     ):
         self.base_path = path
+        self.enable_filter = enable_filter
         if not os.path.exists(path):
             os.makedirs(path)
         if not os.path.exists(os.path.join(path, "id_meta.json")):
@@ -54,7 +56,7 @@ class Split1(Dataset):
                 and valid_c["objectConsistency"] > 4
                 and valid_c["imageQuality"] > 4
             )
-            if not valid:
+            if not valid and self.enable_filter:
                 continue
             data_items.append((group_idx, item_idx))
         return data_items
@@ -124,8 +126,10 @@ class Split2(Dataset):
         self,
         path: str,
         condition_max_size: int = 512,
+        enable_filter: bool = True,
     ):
         self.base_path = path
+        self.enable_filter = enable_filter
 
         if not os.path.exists(path):
             os.makedirs(path)
@@ -151,7 +155,7 @@ class Split2(Dataset):
                 and valid_c["objectConsistency"] > 4
                 and valid_c["imageQuality"] > 4
             )
-            if not valid:
+            if not valid and self.enable_filter:
                 continue
             data_items.append((group_idx, item_idx))
         return data_items
@@ -223,23 +227,25 @@ class Subjects200KDataset(Dataset):
         condition_max_size: int = 512,
         use_split1: bool = True,
         use_split2: bool = True,
-        split1_bias: int = 1,
+        split1_bias: int = 1,  # How many times more likely to sample from split1
+        enable_filter: bool = True,  # Whether to filter out invalid samples
     ):
         self.base_path = base_path
         self.use_split1 = use_split1
         self.use_split2 = use_split2
+        self.enable_filter = enable_filter
 
         if not use_split1 and not use_split2:
             raise ValueError("At least one split must be used")
 
         if use_split1:
             self.iddata1_path = os.path.join(base_path, path_1)
-            self.dataset1 = Split1(self.iddata1_path, condition_max_size)
+            self.dataset1 = Split1(self.iddata1_path, condition_max_size, enable_filter)
             self.dataset1_bias = split1_bias
 
         if use_split2:
             self.iddata2_path = os.path.join(base_path, path_2)
-            self.dataset2 = Split2(self.iddata2_path, condition_max_size)
+            self.dataset2 = Split2(self.iddata2_path, condition_max_size, enable_filter)
 
     def __len__(self):
         length = 0
