@@ -6,18 +6,22 @@
 
 <img src='./assets/data.jpg' width='100%' />
 </br>
-A large-scale dataset of 200,000 paired images (derived from OmniControl) where each pair maintains subject consistency while varying the scene context.
+
+Subjects200K is a large-scale dataset containing 200,000 paired images, introduced as part of the [OmniControl](https://github.com/Yuanshi9815/OminiControl) project. Each image pair maintains subject consistency while presenting variations in scene context.
 
 ## Quick Start
-```python
-from src.dataset import Subjects200K
+* Usage
+  ```python
+    from src.dataset import Subjects200K
 
-# Initialize dataset
-dataset = Subjects200K()
+    # Initialize dataset
+    dataset = Subjects200K()
 
-# Access samples
-sample = dataset[0]
-```
+    # Access samples
+    sample = dataset[0]
+    ```
+
+* Example code: `dataset_example.ipynb`
 
 ### Sample Format
 Each data point contains:
@@ -28,12 +32,16 @@ Each data point contains:
 - `description2`: Text description for right image
 - `image_pair`: Combined image (1024x512)
 
+
+## Contributing
+We welcome contributions! Please feel free to submit a Pull Request or open an Issue.
+
 ## Citation
 ```
 @article{
   tan2024omini,
   title={OminiControl: Minimal and Universal Control for Diffusion Transformer},
-  author={Zhenxiong Tan, Xingyi Yang, Songhua Liu, and Xinchao Wang},
+  author={Zhenxiong Tan, Songhua Liu, Xingyi Yang, Qiaochu Xue, and Xinchao Wang},
   journal={arXiv preprint arXiv:2411.xxxx},
   year={2024}
 }
