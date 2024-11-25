@@ -1,7 +1,7 @@
 # Subjects200K Dataset
 
 
-<a href="https://arxiv.org/abs/2411.xxxx"><img src="https://img.shields.io/badge/ariXv-2411.xxxx-A42C25.svg" alt="arXiv"></a>
+<a href="https://arxiv.org/abs/2411.15098"><img src="https://img.shields.io/badge/ariXv-2411.15098-A42C25.svg" alt="arXiv"></a>
 <a href="https://github.com/Yuanshi9815/OminiControl"><img src="https://img.shields.io/badge/GitHub-OminiControl-blue.svg?logo=github&" alt="GitHub"></a>
 
 <img src='./assets/data.jpg' width='100%' />
@@ -42,7 +42,7 @@ We welcome contributions! Please feel free to submit a Pull Request or open an I
   tan2024omini,
   title={OminiControl: Minimal and Universal Control for Diffusion Transformer},
   author={Zhenxiong Tan, Songhua Liu, Xingyi Yang, Qiaochu Xue, and Xinchao Wang},
-  journal={arXiv preprint arXiv:2411.xxxx},
+  journal={arXiv preprint arXiv:2411.15098},
   year={2024}
 }
 ```
