@@ -10,18 +10,52 @@
 
 Subjects200K is a large-scale dataset containing 200,000 paired images, introduced as part of the [OminiControl](https://github.com/Yuanshi9815/OminiControl) project. Each image pair maintains subject consistency while presenting variations in scene context.
 
-## Quick Start
-### From HuggingFace (Recommended 🌟)
+### Quick Start
 <a href="https://huggingface.co/datasets/Yuanshi/Subjects200K"><img src="https://img.shields.io/badge/🤗_HuggingFace-Data-ffbd45.svg" alt="HuggingFace"></a>
 
-- Usage
+- Load dataset
   ```python
   from datasets import load_dataset
 
   # Load dataset
   dataset = load_dataset('Yuanshi/Subjects200K')
   ```
-- Sample Format:
+
+- Filter high-quality pairs from `collection_2`
+  ```python
+  def filter_func(item):
+      if item.get("collection") != "collection_2_valid":
+          return False
+      if not item.get("quality_assessment"):
+          return False
+      return all(
+          item["quality_assessment"].get(key, 0) >= 5
+          for key in ["compositeStructure", "objectConsistency", "imageQuality"]
+      )
+  
+  collection_2_valid = dataset["train"].filter(
+      filter_func,
+      num_proc=16,
+      cache_file_name="./cache/dataset/collection_2_valid.arrow", # Optional
+  )
+  ```
+
+
+### Collections
+**Collection1 (`collection_1`)**
+-  512 $\times$ 512 resolution, with 16-pixel padding.
+-  Total 18,396 image pairs, with 8,200 pairs having high-quality ratings.
+
+**Collection2 (`collection_2`)**
+-  512 $\times$ 512 resolution, with 16-pixel padding.
+-  Total 187,840 image pairs, with 111,767 pairs having high-quality ratings.
+
+**Collection3 (`collection_3`)** (To be uploaded)
+-  1024 $\times$ 1024 resolution.
+
+>  The description formats may vary across different collections.
+
+### Data Format
   | Key name             | Type    | Description                                                                                                                                                                                                |
   | -------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
   | `image`              | `image` | A composite image containing a pair of images with 16-pixel padding.                                                                                                                                       |
@@ -29,29 +63,6 @@ Subjects200K is a large-scale dataset containing 200,000 paired images, introduc
   | `quality_assessment` | `dict`  | Quality scores evaluated by the ChatGPT-4o model. Each quality dimension is rated on a scale of 0-5. Recommended for filtering out low-quality image pairs which do not have all dimensions rated above 5. |
   | `description`        | `dict`  | Detailed textual description of the image pair contents.                                                                                                                                                   |
 
-
-
-### From AWS S3 (will be deprecated)
-- Usage
-  ```python
-    from src.dataset import Subjects200K
-
-    # Initialize dataset
-    dataset = Subjects200K()
-
-    # Access samples
-    sample = dataset[0]
-  ```
-
-- Example code: `dataset_example.ipynb`
-
-- Sample Format:
-  - `instance`: Brief description of the subject
-  - `image1`: Left image (512x512)
-  - `image2`: Right image (512x512)
-  - `description1`: Text description for left image
-  - `description2`: Text description for right image
-  - `image_pair`: Combined image (1024x512)
 
 
 ## Contributing
