@@ -24,7 +24,7 @@ Subjects200K is a large-scale dataset containing 200,000 paired images, introduc
 - Filter high-quality pairs from `collection_2`
   ```python
   def filter_func(item):
-      if item.get("collection") != "collection_2_valid":
+      if item.get("collection") != "collection_2":
           return False
       if not item.get("quality_assessment"):
           return False
