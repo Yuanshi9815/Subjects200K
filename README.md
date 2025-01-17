@@ -42,17 +42,16 @@ Subjects200K is a large-scale dataset containing 200,000 paired images, introduc
 
 
 ### Collections
-**Collection1 (`collection_1`)**
+**Collection1 (`collection_1`)** [Link 🔗](https://huggingface.co/datasets/Yuanshi/Subjects200K)
 -  512 $\times$ 512 resolution, with 16-pixel padding.
 -  Total 18,396 image pairs, with 8,200 pairs having high-quality ratings.
 
-**Collection2 (`collection_2`)**
+**Collection2 (`collection_2`)** [Link 🔗](https://huggingface.co/datasets/Yuanshi/Subjects200K)
 -  512 $\times$ 512 resolution, with 16-pixel padding.
 -  Total 187,840 image pairs, with 111,767 pairs having high-quality ratings.
 
-**Collection3 (`collection_3`)** (To be uploaded)
+**Collection3 (`collection_3`)** [Link 🔗](https://huggingface.co/datasets/Yuanshi/Subjects200K_collection3)
 -  1024 $\times$ 1024 resolution.
-
 >  The description formats may vary across different collections.
 
 ### Data Format
